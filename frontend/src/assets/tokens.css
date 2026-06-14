@@ -1,0 +1,61 @@
+/* ═══════════════════════════════════════════
+   峰Sir Tech Blue · Design Tokens
+   唯一真相源 — 改这里全站生效
+   ═══════════════════════════════════════════ */
+:root {
+  /* ── Backgrounds ── */
+  --color-bg-body: #F1F5F9;
+  --color-bg-surface: #FFFFFF;
+  --color-bg-hover: #F8FAFC;
+  --color-bg-sidebar: #FFFFFF;
+  --color-bg-input: #FFFFFF;
+  --color-bg-tag: #EFF6FF;
+
+  /* ── Text ── */
+  --color-text-primary: #1E293B;
+  --color-text-secondary: #475569;
+  --color-text-heading: #0F172A;
+  --color-text-muted: #94A3B8;
+  --color-text-link: #2563EB;
+  --color-text-inverse: #FFFFFF;
+
+  /* ── Brand / Accent ── */
+  --color-primary: #2563EB;
+  --color-primary-hover: #1D4ED8;
+  --color-primary-light: #DBEAFE;
+  --color-success: #10B981;
+  --color-danger: #EF4444;
+  --color-warning: #F59E0B;
+
+  /* ── Borders ── */
+  --color-border: #E2E8F0;
+  --color-border-hover: #2563EB;
+
+  /* ── Shadows ── */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -1px rgb(0 0 0 / 0.03);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.05), 0 4px 6px -2px rgb(0 0 0 / 0.025);
+
+  /* ── Radius ── */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+
+  /* ── Spacing ── */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+
+  /* ── Typography ── */
+  --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --font-size-xs: 12px;
+  --font-size-sm: 13px;
+  --font-size-base: 14px;
+  --font-size-lg: 16px;
+  --font-size-xl: 20px;
+  --font-size-2xl: 24px;
+  --font-size-3xl: 32px;
+}

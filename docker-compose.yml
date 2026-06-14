@@ -1,0 +1,87 @@
+services:
+  crm-db:
+    image: postgres:16-alpine
+    container_name: crm-db-v3
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-crm}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+      POSTGRES_DB: ${POSTGRES_DB:-crm}
+    volumes:
+      - pgdata_v3:/var/lib/postgresql/data
+    networks:
+      - crm-net-v3
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-crm} -d ${POSTGRES_DB:-crm}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  crm-redis:
+    image: redis:7-alpine
+    container_name: crm-redis-v3
+    restart: unless-stopped
+    command: redis-server --appendonly yes --maxmemory 128mb --maxmemory-policy allkeys-lru
+    volumes:
+      - redisdata_v3:/data
+    networks:
+      - crm-net-v3
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  crm-backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: crm-backend-v3
+    restart: unless-stopped
+    ports:
+      - "${PORT:-8016}:8016"
+    environment:
+      - SECRET_KEY=${SECRET_KEY:-crm-secret-change-in-production}
+      - DEEPSEEK_API_KEY=${DEEPSEEK_API_KEY:-}
+      - TZ=${TZ:-Asia/Shanghai}
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-crm}:${POSTGRES_PASSWORD:-changeme}@crm-db:5432/${POSTGRES_DB:-crm}
+      - REDIS_URL=redis://crm-redis:6379/0
+      - PORT=8016
+    volumes:
+      - ./backend/app:/app/app:ro
+      - crm_data_v3:/app/app/data
+      - crm_uploads_v3:/app/uploads
+      - crm_files_v3:/app/files
+      - crm_exports_v3:/app/exports
+    depends_on:
+      crm-db:
+        condition: service_healthy
+      crm-redis:
+        condition: service_healthy
+    networks:
+      - crm-net-v3
+
+  crm-frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: crm-frontend-v3
+    restart: unless-stopped
+    ports:
+      - "${FRONTEND_PORT:-8092}:80"
+    depends_on:
+      - crm-backend
+    networks:
+      - crm-net-v3
+
+volumes:
+  pgdata_v3:
+  redisdata_v3:
+  crm_data_v3:
+  crm_uploads_v3:
+  crm_files_v3:
+  crm_exports_v3:
+
+networks:
+  crm-net-v3:
+    driver: bridge

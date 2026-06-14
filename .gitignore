@@ -1,0 +1,51 @@
+# Environment
+.env
+*.env
+
+# Database
+*.db
+*.db-journal
+*.db-wal
+
+# Uploads and data
+uploads/*
+files/*
+exports/*
+data/*
+!*/.gitkeep
+
+# Python
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+
+# Node
+node_modules/
+dist/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Backup files
+*.bak
+*.bak-*
+*.bak.*
+
+# Docker volumes
+pgdata*/
+redisdata*/
+
+# Nginx
+nginx/
